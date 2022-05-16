@@ -19,6 +19,7 @@
                 background-color="primary"
                 outlined
                 color="light"
+                v-model="username"
               ></v-text-field>
               <v-text-field
                 label="Enter your password"
@@ -29,8 +30,15 @@
                 class="rounded-0"
                 outlined
                 color="light"
+                v-model="password"
               ></v-text-field>
-              <v-btn class="rounded-0 accent" color="#000000" x-large block dark
+              <v-btn
+                class="rounded-0 accent"
+                color="#000000"
+                x-large
+                block
+                dark
+                @click="login"
                 >Login</v-btn
               >
               <v-card-actions class="justify-center text-subtitle-2">
@@ -51,37 +59,38 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'app-login',
-  data(){
-            return{
-                login : {
-                    type : Object}
+  data() {
+    return {
+      username: '',
+      password: '',
+    }
+  },
+  computed: {
+    ...mapState({
+      loginInfo: (state) => state.loginInfo,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      fetchLogin: 'fetchLogin',
+    }),
+    login() {
+      // console.log(this.username, this.password)
+      this.fetchLogin({
+        username: this.username,
+        password: this.password,
+      })
 
-            }
-        },
-        async mounted(){
-            try{
-                var result = await this.$axios({
-                    method: "POST",
-                    url: "http://localhost:5000/graphql",
-                    data: {
-                        query: `
-                        mutation
-                        {
-                             login(login: { username: "nicolas23", password: "123456" }) { token, exp, username } 
-                        }
-                        `
-                    }
-                });
-                this.login = result.data.data.login;
-                console.log(this.login)
-            }catch(error){
-                console.error(error);
-            }
-        },
+      setTimeout(() => {
+        console.log('hola perras', this.loginInfo)
+      }, 2000)
+    },
+  },
+  mounted() {},
 }
-
 </script>
 
 <style lang="css" scoped>

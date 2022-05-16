@@ -21,7 +21,9 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/vuex-persist', ssr: false },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -63,13 +65,13 @@ export default {
           error: '#eb445a',
           success: '#2317ac',
           light: '#add7f6'
-          // primary: colors.blue.darken2,
-          // accent: colors.grey.darken3,
-          // secondary: colors.amber.darken3,
-          // info: colors.teal.lighten1,
-          // warning: colors.amber.base,
-          // error: colors.deepOrange.accent4,
-          // success: colors.green.accent3,
+            // primary: colors.blue.darken2,
+            // accent: colors.grey.darken3,
+            // secondary: colors.amber.darken3,
+            // info: colors.teal.lighten1,
+            // warning: colors.amber.base,
+            // error: colors.deepOrange.accent4,
+            // success: colors.green.accent3,
         },
       },
     },

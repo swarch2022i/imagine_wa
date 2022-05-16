@@ -1,6 +1,6 @@
 <template>
   <v-container grid-list-xs>
-    <v-navigation-drawer v-model="sidebar" absolute class="primary">
+    <!-- <v-navigation-drawer v-model="sidebar" absolute class="primary">
       <v-list>
         <v-list-item
           v-for="item in menuItems"
@@ -13,7 +13,7 @@
           <v-list-item-content>{{ item.title }}</v-list-item-content>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
     <v-toolbar dense class="primary">
       <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="sidebar = !sidebar"></v-app-bar-nav-icon>
@@ -50,7 +50,8 @@ export default {
       sidebar: true,
       menuItems: [
         { title: 'Home', path: '/', icon: 'mdi-home' },
-        { title: 'Sign Up', path: '/login', icon: 'mdi-account' },
+        { title: 'Sign Ip', path: '/login', icon: 'mdi-account' },
+        { title: 'Sign Up', path: '/register', icon: 'mdi-account' },
       ],
     }
   },

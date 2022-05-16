@@ -85,7 +85,7 @@ export default {
       })
 
       setTimeout(() => {
-        console.log('hola perras', this.loginInfo)
+        console.log('hola', this.loginInfo)
       }, 2000)
     },
   },

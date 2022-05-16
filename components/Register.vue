@@ -6,7 +6,7 @@
           <div class="text-center">
             <h1 class="mb-2">Register</h1>
           </div>
-          <v-img class="mx-auto" src="/vuetify-logo.svg" />
+          <v-img class="mx-auto" src="/login.png" />
           <v-card-text>
             <v-form>
               <v-text-field
@@ -48,15 +48,12 @@
                   class="pl-2 ml-6"
                   style="color: #ffffff"
                   to="/login"
-                  >Sign Up
+                  >Sign In
                 </NuxtLink>
               </v-card-actions>
             </v-form>
           </v-card-text>
-          <!-- <v-card-text class="text-center">
-            By registering, you agree to be  :3
-            <h1 class="red--text">OURS</h1>
-          </v-card-text> -->
+
         </v-card>
       </v-col>
     </v-row>
@@ -72,6 +69,6 @@ export default {
 <style lang="css" scoped>
 .mx-auto {
   height: 210px;
-  width: 180px;
+  width: 210px;
 }
 </style>

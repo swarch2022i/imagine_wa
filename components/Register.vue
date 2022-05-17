@@ -18,6 +18,7 @@
                 background-color="primary"
                 outlined
                 color="light"
+                v-model="username"
               ></v-text-field>
               <v-text-field
                 label="Enter your password"
@@ -28,18 +29,20 @@
                 background-color="primary"
                 outlined
                 color="light"
+                v-model="password"
               ></v-text-field>
               <v-text-field
                 label="Re-enter password"
-                name="password"
+                name="password_conf"
                 prepend-inner-icon="mdi-lock-outline"
                 type="password"
                 class="rounded-0"
                 background-color="primary"
                 outlined
                 color="light"
+                v-model="password_conf"
               ></v-text-field>
-              <v-btn class="rounded-0 accent" color="#000000" x-large block dark
+              <v-btn class="rounded-0 accent" color="#000000" x-large block dark  @click="register"
                 >Register</v-btn
               >
               <v-card-actions class="justify-center text-subtitle-2">
@@ -61,8 +64,44 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
-  name: 'app-login',
+  name: 'app-register',
+  data() {
+    return {
+      username: '',
+      password: '',
+      password_conf:'',
+      userid : '',
+    }
+  },
+  computed: {
+    ...mapState({
+      user: (state) => state.user,
+      perfil : (state) => state.perfil,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      fetchRegister: 'fetchRegister',
+      fetchCreatePerfil: 'fetchCreatePerfil',
+    }),
+    register() {
+      this.fetchRegister({
+        username: this.username,
+        password: this.password,
+        password_conf: this.password_conf,
+      })
+      this.fetchCreatePerfil({
+        idUsuario: this.user.id,
+        nombre: this.username,
+      })
+      setTimeout(() => {
+        console.log('hola', this.perfil)
+      }, 2000)
+    },
+    
+  },
 }
 </script>
 

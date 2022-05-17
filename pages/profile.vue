@@ -1,46 +1,38 @@
 <template>
   <div>
-    <ProfileTop :data="perfil" />
+    <ProfileTop :data="this.perfilInfo" />
     <h1>Aqui van las imagenes</h1>
   </div>
 </template>
 
 <script>
 import ProfileTop from '../components/ProfileTop.vue'
+import { mapState, mapActions } from 'vuex'
+import { mapGetters } from 'vuex';
 import axios from 'axios'
 export default {
   name: 'ProfilePage',
   components: { ProfileTop },
-  data() {
-    return {
-      perfil: {
-        type: Object,
-      },
-    }
+  computed: {
+    ...mapState({
+      perfilInfo: (state) => state.perfilInfo,
+      user:(state)=>state.user
+    }),
   },
-  async mounted() {
-    try {
-      var result = await axios({
-        method: 'POST',
-        url: 'http://localhost:5000/graphql',
-        data: {
-          query: `
-                        {
-                            getPerfilByIdUsuario(idUsuario:"1"){
-                                nombre
-                                texto
-                                numfollowBy
-                                numfollowers
-                            }
-                        }
-                        `,
-        },
+  methods: { 
+    ...mapActions({
+      fetchLoadPerfil2: 'fetchLoadPerfil',
+    }),
+  }, 
+  mounted(){
+      this.fetchLoadPerfil2({
+        idUsuario : "1"
       })
-      this.perfil = result.data.data.getPerfilByIdUsuario
-      console.log(this.perfil)
-    } catch (error) {
-      console.error(error)
-    }
-  },
+      setTimeout(() => {
+        console.log('hola', this.perfilInfo)
+      }, 2000)
+  }
+
+
 }
 </script>

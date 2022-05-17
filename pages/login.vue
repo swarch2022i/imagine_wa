@@ -88,6 +88,7 @@ export default {
         password: this.password,
       })
       setTimeout(() => {
+
         if (Object.keys(this.loginInfo).length === 0) {
           //Si no fue extioso, lo manda a login
           this.ruta = 'login'
@@ -95,6 +96,8 @@ export default {
           //Si fue exitoso lo manda al home
           this.ruta = '/'
         }
+
+
       }, 2000)
 
     },

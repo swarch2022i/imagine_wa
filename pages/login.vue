@@ -39,8 +39,9 @@
                 block
                 dark
                 @click="login"
-                >Login</v-btn
-              >
+                :to="ruta"
+                >Login
+              </v-btn>
               <v-card-actions class="justify-center text-subtitle-2">
                 Don't have an account yet?
                 <NuxtLink
@@ -66,27 +67,39 @@ export default {
     return {
       username: '',
       password: '',
+      ruta: '',
     }
   },
   computed: {
     ...mapState({
       loginInfo: (state) => state.loginInfo,
+      user: (state) => state.user,
     }),
   },
   methods: {
     ...mapActions({
       fetchLogin: 'fetchLogin',
+      fetchLogOff: 'fetchLogOff',
     }),
     login() {
-      // console.log(this.username, this.password)
+
       this.fetchLogin({
         username: this.username,
         password: this.password,
       })
-
       setTimeout(() => {
-        console.log('hola perras', this.loginInfo)
+        if (Object.keys(this.loginInfo).length === 0) {
+          //Si no fue extioso, lo manda a login
+          this.ruta = 'login'
+        } else {
+          //Si fue exitoso lo manda al home
+          this.ruta = '/'
+        }
       }, 2000)
+
+    },
+    logOff() {
+      this.fetchLogOff()
     },
   },
   mounted() {},

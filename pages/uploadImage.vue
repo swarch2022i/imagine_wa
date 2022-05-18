@@ -1,5 +1,6 @@
 <template>
-  <v-container class="fill-height" fluid>
+  <div v-if="loggedIn">
+    <v-container class="fill-height" fluid>
     <v-row align="center" justify="center" dense>
       <v-col cols="12" sm="8" md="6" lg="8">
         <v-card class="primary">
@@ -140,7 +141,14 @@
       </v-col>
     </v-row>
   </v-container>
-</template>
+
+  </div>
+  <div v-else>
+  <h1>
+  Please Log In
+  </h1>
+  </div>
+</template> 
 
 <script>
 import { mapState, mapActions } from 'vuex'
@@ -159,6 +167,7 @@ export default {
   computed: {
     ...mapState({
       user: (state) => state.user,
+      loggedIn: (state) => state.loggedIn,
     }),
   },
   methods: {
@@ -242,15 +251,15 @@ export default {
           formDataU.append('tags[]', JSON.stringify(tag))
         })
 
-        var response = this.fetchUploadImage({
+        var response = await this.fetchUploadImage({
           formData: this.formDataU,
         })
-        console.log(response.data)//Como saco el estado ?
-        if(response === response/*201 ?*/){
-          this.$router.push('/')//al sweet sweet home :3
-        }
-        
 
+        this.$router.push('/')
+        //console.log(response.data)//Como saco el estado ?
+        // if(response === response/*201 ?*/){
+        //   this.$router.push('/')//al sweet sweet home :3
+        // }
       }
     },
   },

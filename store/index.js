@@ -33,7 +33,7 @@ export const actions = {
 
   async fetchLogin({ commit }, { username, password }) {
     try {
-
+      
       var response = await this.$axios.post('http://35.184.18.189:5000/graphql'/*`${process.env.API_GATEWAY_URL}/graphql`*/, {
 
         query: `
@@ -43,7 +43,8 @@ export const actions = {
               }`,
       })
       commit('setLoginInfo', { loginInfo: response.data.data.login })
-      commit('setUser', { user: JSON.parse(atob(response.data.data.login.token.split('.')[1])) })
+      commit('setUser', { user: JSON.parse(atob(response.data.data.login.token.split('.')[1])) }) 
+      commit('setLoggedIn', { loggedIn: true })
       return response
     } catch (error) {
       alert('Wrong data')
@@ -54,6 +55,7 @@ export const actions = {
   fetchLogOff({ commit }) {
     commit('setLoginInfo', { loginInfo: new Object() })
     commit('setUser', { user: new Object() })
+    commit('setLoggedIn', { loggedIn: false })
   },
 
 

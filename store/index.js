@@ -1,9 +1,10 @@
-
 export const state = () => ({
   user: {},
   perfil: {},
   perfilInfo: {},
-  loginInfo: {}
+  loginInfo: {},
+  loggedIn: true
+
 })
 
 export const mutations = {
@@ -21,6 +22,10 @@ export const mutations = {
 
   ['setLoginInfo'](state, { loginInfo }) {
     state.loginInfo = loginInfo
+  },
+
+  ['setLoggedIn'](state, { loggedIn }) {
+    state.loggedIn = loggedIn
   }
 }
 
@@ -28,7 +33,9 @@ export const actions = {
 
   async fetchLogin({ commit }, { username, password }) {
     try {
-      var response = await this.$axios.post('http://localhost:5000/graphql', {//`${process.env.API_GATEWAY_URL/graphql}`
+
+      var response = await this.$axios.post('http://35.184.18.189:5000/graphql'/*`${process.env.API_GATEWAY_URL}/graphql`*/, {
+
         query: `
               mutation
               {
@@ -38,8 +45,6 @@ export const actions = {
       commit('setLoginInfo', { loginInfo: response.data.data.login })
       commit('setUser', { user: JSON.parse(atob(response.data.data.login.token.split('.')[1])) })
       return response
-
-
     } catch (error) {
       alert('Wrong data')
       console.error(error)
@@ -50,6 +55,7 @@ export const actions = {
     commit('setLoginInfo', { loginInfo: new Object() })
     commit('setUser', { user: new Object() })
   },
+
 
   async fetchUploadImage({ commit }, { formData }) {
     try {
@@ -64,13 +70,11 @@ export const actions = {
       console.log(error)
     }
   },
-
-
-
-
   async fetchRegister({ commit }, { username, password, password_conf }) {
     try {
-      var response = await this.$axios.post('http://localhost:5000/graphql', {//`${process.env.API_GATEWAY_URL/graphql}`
+      var response = await this.$axios.post(//`${process.env.API_GATEWAY_URL/graphql}`
+      'http://localhost:5000/graphql', {
+
         query: `
               mutation
               {
@@ -89,7 +93,10 @@ export const actions = {
   },
   async fetchCreatePerfil({ commit }, { idUsuario, nombre }) {
     try {
-      var response = await this.$axios.post('http://localhost:5000/graphql', {//`${process.env.API_GATEWAY_URL/graphql}`
+
+      var response = await this.$axios.post(//`${process.env.API_GATEWAY_URL/graphql}`
+      'http://localhost:5000/graphql', {
+
         query: `
           mutation
           {
@@ -126,5 +133,16 @@ export const actions = {
       console.error(error)
     }
   },
-}
 
+  async fetchAllImages({ commit }) {
+    this.$axios.post(`${process.env.API_GATEWAY_URL}/graphql`, {
+      query: `{
+        allImages {
+          url
+        }
+      }`
+    })
+
+    console.log('')
+  }
+}

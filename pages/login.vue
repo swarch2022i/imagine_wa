@@ -80,23 +80,23 @@ export default {
       fetchLogin: 'fetchLogin',
       fetchLogOff: 'fetchLogOff',
     }),
-    login() {
-      
-      this.fetchLogin({
-        username: this.username,
-        password: this.password,
-      })
 
-        //hacer la comporbación en base al response ?
+    async login() {
+      console.log("inicia")
+      await this.fetchLogin({
+        username: this.username,
+          password: this.password,
+        })
+        console.log("termina el fetch")
+        console.log("si funciona el boton?")
         if (Object.keys(this.loginInfo).length === 0) {
-          //Si no fue extioso, pos nada :v
+          //Si no fue extioso, lo manda a login
+          console.log("erorrrr")
 
         } else {
           //Si fue exitoso lo manda al home
           this.$router.push('/')
         }
-
-
 
 
     },

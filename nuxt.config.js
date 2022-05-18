@@ -15,6 +15,9 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [{
+      src: "https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js",
+    }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css

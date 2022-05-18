@@ -25,23 +25,55 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <div style="width: 50%">
+        <v-text-field
+          name="searchBar"
+          placeholder="search by #tags, names, ..."
+          v-model="searchText"
+          class="mt-6 textField"
+          height="25"
+          :full-width="false"
+          @keydown.enter="fetchSearch"
+          @click:append="fetchSearch"
+          background-color="secondary"
+          rounded
+          append-icon="mdi-magnify"
+          color="white"
+        ></v-text-field>
+      </div>
+      <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
-        <v-btn
-          class="primary"
-          dense
-          v-for="item in menuItems"
-          :key="item.title"
-          :to="item.path"
-        >
-          <v-icon left dark>{{ item.icon }}</v-icon>
-          {{ item.title }}
-        </v-btn>
+        <div v-if="loggedIn">
+          <v-btn
+            class="primary"
+            dense
+            v-for="item in menuItemsLogged"
+            :key="item.title"
+            @click="changeMenu(item)"
+          >
+            <v-icon left dark>{{ item.icon }}</v-icon>
+            {{ item.title }}
+          </v-btn>
+        </div>
+        <div v-else>
+          <v-btn
+            class="primary"
+            dense
+            v-for="item in menuItems"
+            :key="item.title"
+            @click="changeMenu(item)"
+          >
+            <v-icon left dark>{{ item.icon }}</v-icon>
+            {{ item.title }}
+          </v-btn>
+        </div>
       </v-toolbar-items>
     </v-toolbar>
   </v-container>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'app-header',
   data() {
@@ -53,7 +85,32 @@ export default {
         { title: 'Log in', path: '/login', icon: 'mdi-account' },
         { title: 'Sign up', path: '/register', icon: 'mdi-account' },
       ],
+      menuItemsLogged: [
+        { title: 'Home', path: '/', icon: 'mdi-home' },
+        { title: 'Log out', path: '/login', icon: 'mdi-account' },
+      ],
+      searchText: null,
     }
+  },
+  computed: {
+    ...mapState({
+      loggedIn: (state) => state.loggedIn,
+    }),
+  },
+  methods: {
+    fetchSearch() {
+      this.$router.push(`/search/${encodeURIComponent(this.searchText)}`)
+    },
+    changeMenu(item) {
+      console.log(item)
+      if (this.loggedIn && item.title === 'Log out') {
+        // funcion de logout
+        console.log('deslogueado')
+        // this.loggedIn = false
+        this.$store.commit('setLoggedIn', { loggedIn: false })
+      }
+      this.$router.push(item.path)
+    },
   },
 }
 </script>
@@ -63,4 +120,15 @@ export default {
   height: 210px;
   width: 180px;
 }
+
+.v-text-field .v-input__control .v-input__slot {
+  min-height: auto !important;
+  /* display: flex !important; */
+  /* align-items: center !important; */
+}
+
+/* .text-field{
+  caret-color: aqua;
+  border-radius: 10px !important;
+} */
 </style>

@@ -86,19 +86,23 @@ export default {
       fetchRegister: 'fetchRegister',
       fetchCreatePerfil: 'fetchCreatePerfil',
     }),
-    register() {
-      this.fetchRegister({
+    async register() {
+      try{
+      await this.fetchRegister({
         username: this.username,
         password: this.password,
         password_conf: this.password_conf,
       })
-      this.fetchCreatePerfil({
-        idUsuario: this.user.id,
-        nombre: this.username,
+      console.log('hola', this.user.id)
+      await this.fetchCreatePerfil({
+        idUsuario : this.user.id,
+        nombre : this.username,
       })
-      setTimeout(() => {
-        console.log('hola', this.perfil)
-      }, 2000)
+      }catch(error){
+        console.error("error no se puedo registrarrrr")
+      }
+      
+
     },
     
   },

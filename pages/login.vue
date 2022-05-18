@@ -39,7 +39,6 @@
                 block
                 dark
                 @click="login"
-                :to="ruta"
                 >Login
               </v-btn>
               <v-card-actions class="justify-center text-subtitle-2">
@@ -81,25 +80,21 @@ export default {
       fetchLogin: 'fetchLogin',
       fetchLogOff: 'fetchLogOff',
     }),
-    login() {
-
-      this.fetchLogin({
+    async login() {
+      console.log("inicia")
+      await this.fetchLogin({
         username: this.username,
-        password: this.password,
-      })
-      setTimeout(() => {
-
+          password: this.password,
+        })
+        console.log("termina el fetch")
+        console.log("si funciona el boton?")
         if (Object.keys(this.loginInfo).length === 0) {
           //Si no fue extioso, lo manda a login
-          this.ruta = 'login'
+          console.log("erorrrr")
         } else {
           //Si fue exitoso lo manda al home
-          this.ruta = '/'
+          this.$router.push('/')
         }
-
-
-      }, 2000)
-
     },
     logOff() {
       this.fetchLogOff()

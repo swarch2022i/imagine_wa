@@ -87,14 +87,8 @@
         }),
         methods: {
             handleImageChange(event) {
-                const image = event.target.files[0];
-                const formData = new FormData();
-                formData.append('image', image, image.name);
-                this.$store.dispatch('UPLOAD_IMAGE', formData);
             },
             editImage() {
-                const imageInput = document.getElementById('imageInput');
-                imageInput.click();
             }
         },
     }

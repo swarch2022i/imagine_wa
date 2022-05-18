@@ -16,7 +16,7 @@ export default {
   computed: {
     ...mapState({
       perfilInfo: (state) => state.perfilInfo,
-      user:(state)=>state.user
+      user:(state)=>state.user,
     }),
   },
   methods: { 
@@ -24,12 +24,12 @@ export default {
       fetchLoadPerfil2: 'fetchLoadPerfil',
     }),
   }, 
-  mounted(){
-      this.fetchLoadPerfil2({
-        idUsuario : "1"
+  async mounted(){
+     await this.fetchLoadPerfil2({
+        idUsuario : this.user.user_id
       })
       setTimeout(() => {
-        console.log('hola', this.perfilInfo)
+        console.log('hola', this.user.user_id)
       }, 2000)
   }
 

@@ -15,6 +15,8 @@
 
 <script>
 import ImageComponent from '../components/main/imageComponent.vue'
+
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'IndexPage',
   components: { ImageComponent },
@@ -76,6 +78,11 @@ export default {
       columnWidth: 200,
       gutter: 10,
     })
+  },
+  methods: {
+    ...mapActions({
+      fetchAllImages: 'fetchAllImages',
+    }),
   },
 }
 </script>

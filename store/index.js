@@ -2,7 +2,8 @@ export const state = () => ({
   user: {},
   perfil: {},
   perfilInfo: {},
-  loginInfo: {}
+  loginInfo: {},
+  loggedIn: true
 })
 
 export const mutations = {
@@ -20,6 +21,10 @@ export const mutations = {
 
   ['setLoginInfo'](state, { loginInfo }) {
     state.loginInfo = loginInfo
+  },
+
+  ['setLoggedIn'](state, { loggedIn }) {
+    state.loggedIn = loggedIn
   }
 }
 
@@ -110,4 +115,16 @@ export const actions = {
       console.error(error)
     }
   },
+
+  async fetchAllImages({ commit }) {
+    this.$axios.post(`${process.env.API_GATEWAY_URL}/graphql`, {
+      query: `{
+        allImages {
+          url
+        }
+      }`
+    })
+
+    console.log('')
+  }
 }

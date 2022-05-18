@@ -25,6 +25,23 @@
         </nuxt-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <div style="width: 50%">
+        <v-text-field
+          name="searchBar"
+          placeholder="search by #tags, names, ..."
+          v-model="searchText"
+          class="mt-6 textField"
+          height="25"
+          :full-width="false"
+          @keydown.enter="fetchSearch"
+          @click:append="fetchSearch"
+          background-color="secondary"
+          rounded
+          append-icon="mdi-magnify"
+          color="white"
+        ></v-text-field>
+      </div>
+      <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
         <v-btn
           class="primary"
@@ -53,7 +70,13 @@ export default {
         { title: 'Log in', path: '/login', icon: 'mdi-account' },
         { title: 'Sign up', path: '/register', icon: 'mdi-account' },
       ],
+      searchText: null,
     }
+  },
+  methods: {
+    fetchSearch() {
+      this.$router.push(`/search/${encodeURIComponent(this.searchText)}`)
+    },
   },
 }
 </script>
@@ -63,4 +86,15 @@ export default {
   height: 210px;
   width: 180px;
 }
+
+.v-text-field .v-input__control .v-input__slot {
+  min-height: auto !important;
+  /* display: flex !important; */
+  /* align-items: center !important; */
+}
+
+/* .text-field{
+  caret-color: aqua;
+  border-radius: 10px !important;
+} */
 </style>

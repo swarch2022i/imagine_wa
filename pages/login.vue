@@ -39,7 +39,6 @@
                 block
                 dark
                 @click="login"
-                :to="ruta"
                 >Login
               </v-btn>
               <v-card-actions class="justify-center text-subtitle-2">
@@ -82,23 +81,23 @@ export default {
       fetchLogOff: 'fetchLogOff',
     }),
     login() {
-
+      
       this.fetchLogin({
         username: this.username,
         password: this.password,
       })
-      setTimeout(() => {
 
+        //hacer la comporbación en base al response ?
         if (Object.keys(this.loginInfo).length === 0) {
-          //Si no fue extioso, lo manda a login
-          this.ruta = 'login'
+          //Si no fue extioso, pos nada :v
+
         } else {
           //Si fue exitoso lo manda al home
-          this.ruta = '/'
+          this.$router.push('/')
         }
 
 
-      }, 2000)
+
 
     },
     logOff() {

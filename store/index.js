@@ -1,8 +1,7 @@
-
 export const state = () => ({
   user: {},
-  perfil:{},
-  perfilInfo:{},
+  perfil: {},
+  perfilInfo: {},
   loginInfo: {}
 })
 
@@ -11,11 +10,11 @@ export const mutations = {
     state.user = user
   },
 
-  ['setPerfil'](state,{perfil}){
+  ['setPerfil'](state, { perfil }) {
     state.perfil = perfil
   },
 
-  ['setPerfilInfo'](state,{perfilInfo}){
+  ['setPerfilInfo'](state, { perfilInfo }) {
     state.perfilInfo = perfilInfo
   },
 
@@ -25,18 +24,18 @@ export const mutations = {
 }
 
 export const actions = {
-  
+
   async fetchLogin({ commit }, { username, password }) {
     try {
-        var response = await this.$axios.post('http://localhost:5000/graphql', {
-          query: `
+      var response = await this.$axios.post(`${process.env.API_GATEWAY_URL}/graphql`, {
+        query: `
               mutation
               {
                   login(login: { username: "${username}", password: "${password}" }) {token, exp, username } 
               }`,
-        })
-        commit('setLoginInfo', { loginInfo: response.data.data.login })
-        commit('setUser', { user: JSON.parse(atob(response.data.data.login.token.split('.')[1])) })
+      })
+      commit('setLoginInfo', { loginInfo: response.data.data.login })
+      commit('setUser', { user: JSON.parse(atob(response.data.data.login.token.split('.')[1])) })
 
 
     } catch (error) {
@@ -53,10 +52,10 @@ export const actions = {
 
 
 
-  async fetchRegister({ commit }, { username,password,password_conf }) {
+  async fetchRegister({ commit }, { username, password, password_conf }) {
     try {
-        var response = await this.$axios.post('http://localhost:5000/graphql', {
-          query: `
+      var response = await this.$axios.post('http://localhost:5000/graphql', {
+        query: `
               mutation
               {
                 createUserAUTH(user: { 
@@ -66,16 +65,16 @@ export const actions = {
                   id
                 }
               }`,
-        })
-        commit('setUser', { user: response.data.data.createUserAUTH })
+      })
+      commit('setUser', { user: response.data.data.createUserAUTH })
     } catch (error) {
       console.error(error)
     }
   },
-  async fetchCreatePerfil({ commit }, { idUsuario,nombre }) {
+  async fetchCreatePerfil({ commit }, { idUsuario, nombre }) {
     try {
-        var response = await this.$axios.post('http://localhost:5000/graphql', {
-          query: `
+      var response = await this.$axios.post('http://localhost:5000/graphql', {
+        query: `
           mutation
           {
             createPerfil(
@@ -88,13 +87,13 @@ export const actions = {
             idUsuario
             idImagenPerfil
           }}`,
-        })
-        commit('setPerfil', { perfil: response.data.data.createPerfil })
+      })
+      commit('setPerfil', { perfil: response.data.data.createPerfil })
     } catch (error) {
       console.error(error)
     }
   },
-  async fetchLoadPerfil({commit},{idUsuario}){
+  async fetchLoadPerfil({ commit }, { idUsuario }) {
     try {
       var response = await this.$axios.post('http://localhost:5000/graphql', {
         query: `{
@@ -106,10 +105,9 @@ export const actions = {
           }
       }`,
       })
-      commit('setPerfilInfo', { perfilInfo : response.data.data.getPerfilByIdUsuario })
-    }catch (error) {
-    console.error(error)
-  }
+      commit('setPerfilInfo', { perfilInfo: response.data.data.getPerfilByIdUsuario })
+    } catch (error) {
+      console.error(error)
+    }
   },
 }
-

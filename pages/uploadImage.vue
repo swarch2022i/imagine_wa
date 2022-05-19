@@ -242,26 +242,31 @@ export default {
     async upload() {
       if (this.name === '' || this.description === '') {
         alert('Please check inputs')
+        return 0
       } else {
-        const formDataU = new FormData()
-        formDataU.append('images', this.files[0])
-        formDataU.append('userId', JSON.stringify(this.user.user_id))
-        formDataU.append('name', JSON.stringify(this.name))
-        formDataU.append('description', JSON.stringify(this.description))
+        const formData = new FormData()
+        formData.append('images', this.files[0])
+        formData.append('userId', '1') //actualizar luego con el del storgae
+        formData.append('name', this.name)
+        formData.append('description', this.description)
         // formData.append('commentsId',JSON.stringify(['pepito','pepe']) )
+        //strinfy todo :V excepto imagen <3
+
         this.tags.forEach((tag) => {
-          formDataU.append('tags[]', JSON.stringify(tag))
+           formData.append('tags[]', JSON.stringify(tag));
         })
 
-        var response = await this.fetchUploadImage({
-          formData: this.formDataU,
-        })
-
-        this.$router.push('/')
-        //console.log(response.data)//Como saco el estado ?
-        // if(response === response/*201 ?*/){
-        //   this.$router.push('/')//al sweet sweet home :3
-        // }
+        try {
+          var response = await this.$axios.post(
+            'http://35.232.133.8:1234/api/storage/upload',
+            formData
+          )
+          console.log(response.data)
+          this.$router.push('/')
+        } catch (error) {
+          alert('Couldnt upload it')
+          console.log(error)
+        }
       }
     },
   },

@@ -93,6 +93,7 @@ export default {
         password: this.password,
         password_conf: this.password_conf,
       })
+      this.$router.push('/')
       console.log('hola', this.user.id)
       await this.fetchCreatePerfil({
         idUsuario : this.user.id,

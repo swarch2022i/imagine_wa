@@ -1,3 +1,4 @@
+
 export const state = () => ({
   user: {},
   perfil: {},
@@ -34,7 +35,7 @@ export const actions = {
   async fetchLogin({ commit }, { username, password }) {
     try {
       
-      var response = await this.$axios.post('http://35.184.18.189:5000/graphql'/*`${process.env.API_GATEWAY_URL}/graphql`*/, {
+      var response = await this.$axios.post('http://35.232.133.8:5000/graphql'/*`${process.env.API_GATEWAY_URL}/graphql`*/, {
 
         query: `
               mutation
@@ -62,7 +63,7 @@ export const actions = {
   async fetchUploadImage({ commit }, { formData }) {
     try {
       var response = await this.$axios.post(//`${process.env.STORAGE_MS_URL/api/sotrage/upload}`
-        'http://35.184.18.189:1234/api/storage/upload',
+      'http://35.232.133.8:1234/api/storage/upload',
         formData
       )
       return response
@@ -75,7 +76,7 @@ export const actions = {
   async fetchRegister({ commit }, { username, password, password_conf }) {
     try {
       var response = await this.$axios.post(//`${process.env.API_GATEWAY_URL/graphql}`
-      'http://localhost:5000/graphql', {
+      'http://35.232.133.8:5000/graphql', {
 
         query: `
               mutation
@@ -96,8 +97,8 @@ export const actions = {
   async fetchCreatePerfil({ commit }, { idUsuario, nombre }) {
     try {
 
-      var response = await this.$axios.post(//`${process.env.API_GATEWAY_URL/graphql}`
-      'http://localhost:5000/graphql', {
+      var response = await this.$axios.post(//`${process.env.API_GATEWAY_URL}/graphql`
+      'http://35.232.133.8:5000/graphql', {
 
         query: `
           mutation
@@ -120,7 +121,7 @@ export const actions = {
   },
   async fetchLoadPerfil({ commit }, { idUsuario }) {
     try {
-      var response = await this.$axios.post('http://localhost:5000/graphql', {//`${process.env.API_GATEWAY_URL/graphql}`
+      var response = await this.$axios.post('http://35.232.133.8:5000/graphql', {//`${process.env.API_GATEWAY_URL/graphql}`
         query: `{
           getPerfilByIdUsuario(idUsuario:"${idUsuario}"){
               nombre
@@ -137,7 +138,7 @@ export const actions = {
   },
 
   async fetchAllImages({ commit }) {
-    this.$axios.post(`${process.env.API_GATEWAY_URL}/graphql`, {
+    this.$axios.post('http://35.232.133.8:5000/graphql', {
       query: `{
         allImages {
           url

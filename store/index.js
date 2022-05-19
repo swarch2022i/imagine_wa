@@ -3,7 +3,7 @@ export const state = () => ({
   perfil: {},
   perfilInfo: {},
   loginInfo: {},
-  loggedIn: true
+  loggedIn: true,
 
 })
 
@@ -61,7 +61,7 @@ export const actions = {
 
   async fetchUploadImage({ commit }, { formData }) {
     try {
-      var response = await this.$axios.post(//`${process.env.API_GATEWAY_URL/graphql}`
+      var response = await this.$axios.post(//`${process.env.STORAGE_MS_URL/api/sotrage/upload}`
         'http://35.184.18.189:1234/api/storage/upload',
         formData
       )

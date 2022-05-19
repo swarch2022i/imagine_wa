@@ -1,153 +1,155 @@
 <template>
   <div v-if="loggedIn">
     <v-container class="fill-height" fluid>
-    <v-row align="center" justify="center" dense>
-      <v-col cols="12" sm="8" md="6" lg="8">
-        <v-card class="primary">
-          <v-container class="fill-height" fluid>
-            <v-row align="center" justify="center" dense>
-              <v-col cols="12" sm="10" md="10" lg="10">
-                <v-card elevation="0" class="primary">
-                  <v-form>
-                    <h1 class="mb-2">Name</h1>
-                    <v-text-field
-                      label="Enter image's name"
-                      :rules="[() => !!name || 'This field is required']"
-                      type="text"
-                      class="rounded-0"
-                      background-color="primary"
-                      outlined
-                      color="light"
-                      v-model="name"
-                    ></v-text-field>
-                    <div
-                      class="uploader"
-                      @dragenter="OnDragEnter"
-                      @dragleave="OnDragLeave"
-                      @dragover.prevent
-                      @drop="onDrop"
-                      :class="{ dragging: isDragging }"
-                    >
-                      <div class="upload-control" v-show="images.length">
-                        <label for="file">Select a file</label>
-                        <button @click="restart">Restart</button>
-                      </div>
-
-                      <div v-show="!images.length">
-                        <i class="fa fa-cloud-upload"></i>
-                        <v-icon dark> mdi-cloud-upload </v-icon>
-                        <p>Drag your images here</p>
-                        <div>OR</div>
-                        <div class="file-input">
+      <v-row align="center" justify="center" dense>
+        <v-col cols="12" sm="8" md="6" lg="8">
+          <v-card class="primary">
+            <v-container class="fill-height" fluid>
+              <v-row align="center" justify="center" dense>
+                <v-col cols="12" sm="10" md="10" lg="10">
+                  <v-card elevation="0" class="primary">
+                    <v-form>
+                      <h1 class="mb-2">Name</h1>
+                      <v-text-field
+                        label="Enter image's name"
+                        :rules="[() => !!name || 'This field is required']"
+                        type="text"
+                        class="rounded-0"
+                        background-color="primary"
+                        outlined
+                        color="light"
+                        v-model="name"
+                      ></v-text-field>
+                      <div
+                        class="uploader"
+                        @dragenter="OnDragEnter"
+                        @dragleave="OnDragLeave"
+                        @dragover.prevent
+                        @drop="onDrop"
+                        :class="{ dragging: isDragging }"
+                      >
+                        <div class="upload-control" v-show="images.length">
                           <label for="file">Select a file</label>
-                          <input
-                            type="file"
-                            id="file"
-                            @change="onInputChange"
-                            multiple
-                          />
+                          <button @click="restart">Restart</button>
                         </div>
-                      </div>
 
-                      <div class="images-preview" v-show="images.length">
-                        <div
-                          class="img-wrapper"
-                          v-for="(image, index) in images"
-                          :key="index"
-                        >
-                          <img :src="image" :alt="`Image Uplaoder ${index}`" />
-                          <div class="details">
-                            <span
-                              class="name"
-                              v-text="files[index].name"
-                            ></span>
-                            <span
-                              class="size"
-                              v-text="getFileSize(files[index].size)"
-                            ></span>
+                        <div v-show="!images.length">
+                          <i class="fa fa-cloud-upload"></i>
+                          <v-icon dark> mdi-cloud-upload </v-icon>
+                          <p>Drag your images here</p>
+                          <div>OR</div>
+                          <div class="file-input">
+                            <label for="file">Select a file</label>
+                            <input
+                              type="file"
+                              id="file"
+                              @change="onInputChange"
+                              multiple
+                            />
+                          </div>
+                        </div>
+
+                        <div class="images-preview" v-show="images.length">
+                          <div
+                            class="img-wrapper"
+                            v-for="(image, index) in images"
+                            :key="index"
+                          >
+                            <img
+                              :src="image"
+                              :alt="`Image Uplaoder ${index}`"
+                            />
+                            <div class="details">
+                              <span
+                                class="name"
+                                v-text="files[index].name"
+                              ></span>
+                              <span
+                                class="size"
+                                v-text="getFileSize(files[index].size)"
+                              ></span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <h1 class="mb-2" top-margin="5px">Description</h1>
-                    <v-text-field
-                      label="Enter image's description"
-                      type="text"
-                      class="rounded-0"
-                      :rules="[() => !!description || 'This field is required']"
-                      background-color="primary"
-                      outlined
-                      color="light"
-                      v-model="description"
-                    ></v-text-field>
-                    <h1 class="mb-2">Tags</h1>
-                    <v-row dense>
-                      <v-col>
-                        <v-text-field
-                          label="Enter image's tags"
-                          type="text"
-                          class="rounded-0"
-                          background-color="primary"
-                          outlined
-                          color="light"
-                          v-model="tag"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col class="text-right">
-                        <v-btn
-                          depressed
-                          x-large
-                          outlined
-                          color="white"
-                          @click="addTag"
-                        >
-                          Add Tag
-                        </v-btn>
-                        <v-btn
-                          depressed
-                          x-large
-                          outlined
-                          color="white"
-                          @click="resetTags"
-                        >
-                          Reset Tags
-                        </v-btn>
-                      </v-col>
+                      <h1 class="mb-2" top-margin="5px">Description</h1>
+                      <v-text-field
+                        label="Enter image's description"
+                        type="text"
+                        class="rounded-0"
+                        :rules="[
+                          () => !!description || 'This field is required',
+                        ]"
+                        background-color="primary"
+                        outlined
+                        color="light"
+                        v-model="description"
+                      ></v-text-field>
+                      <h1 class="mb-2">Tags</h1>
+                      <v-row dense>
+                        <v-col>
+                          <v-text-field
+                            label="Enter image's tags"
+                            type="text"
+                            class="rounded-0"
+                            background-color="primary"
+                            outlined
+                            color="light"
+                            v-model="tag"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col class="text-right">
+                          <v-btn
+                            depressed
+                            x-large
+                            outlined
+                            color="white"
+                            @click="addTag"
+                          >
+                            Add Tag
+                          </v-btn>
+                          <v-btn
+                            depressed
+                            x-large
+                            outlined
+                            color="white"
+                            @click="resetTags"
+                          >
+                            Reset Tags
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                      <v-row v-show="tags.length">
+                        <div v-for="(tags, index) in tags" :key="index">
+                          <v-chip color="white" outlined v-text="tags" />
+                        </div>
+                      </v-row>
+                    </v-form>
+
+                    <v-row
+                      class="mt-8"
+                      v-show="images.length"
+                      align="center"
+                      justify="center"
+                      dense
+                    >
+                      <v-btn large color="white" outlined block @click="upload"
+                        >Upload
+                      </v-btn>
                     </v-row>
-                    <v-row v-show="tags.length">
-                      <div v-for="(tags, index) in tags" :key="index">
-                        <v-chip color="white" outlined v-text="tags" />
-                      </div>
-                    </v-row>
-                  </v-form>
-
-                  <v-row
-                    class="mt-8"
-                    v-show="images.length"
-                    align="center"
-                    justify="center"
-                    dense
-                  >
-                    <v-btn large color="white" outlined block @click="upload"
-                      >Upload
-                    </v-btn>
-                  </v-row>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
-
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
-  <div v-else>
-  <h1>
-  Please Log In
-  </h1>
-  </div>
+<div v-else>
+    <h1>Please Log In</h1>
+</div>
 </template> 
 
 <script>

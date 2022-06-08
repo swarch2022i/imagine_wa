@@ -19,6 +19,10 @@ export default {
       src: "https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js",
     }]
   },
+  publicRuntimeConfig: {
+    API_GATEWAY: process.env.API_GATEWAY_URL,
+    STORAGE_MS: process.env.STORAGE_MS_URL,
+  },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],

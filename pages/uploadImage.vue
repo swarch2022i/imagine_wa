@@ -258,7 +258,7 @@ export default {
 
         try {
           var response = await this.$axios.post(
-            'http://35.232.133.8:1234/api/storage/upload',
+            `${this.$config.STORAGE_MS}/api/storage/upload`,
             formData
           )
           console.log(response.data)

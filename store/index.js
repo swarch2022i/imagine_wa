@@ -117,14 +117,21 @@ export const actions = {
   },
 
   async fetchAllImages({ commit }) {
-    this.$axios.post(`${process.env.API_GATEWAY_URL}/graphql`, {
-      query: `{
-        allImages {
-          url
-        }
-      }`
-    })
 
-    console.log('')
+    // this.$storageApi.get(`/`).then(response => {
+    //     console.log(response.data)
+    //   })
+    this.$axios.get(`api/images`).then(response => {
+        console.log(response.data)
+      })
+      // this.$axios.post(`${this.$config.API_GATEWAY_URL}/graphql`, {
+      //   query: `{
+      //       allImages {
+      //         url
+      //       }
+      //     }`
+      // }).then(response => {
+      //   console.log(response.data)
+      // })
   }
 }

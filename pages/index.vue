@@ -71,18 +71,23 @@ export default {
     }
   },
   mounted() {
-    var elem = document.querySelector('.image-grid')
-    var msnry = new Masonry(elem, {
-      // options
-      itemSelector: '.image-grid-item',
-      columnWidth: 200,
-      gutter: 10,
+    this.fetchAllImages({}).then(() => {
+      var elem = document.querySelector('.image-grid')
+      var msnry = new Masonry(elem, {
+        // options
+        itemSelector: '.image-grid-item',
+        columnWidth: 200,
+        gutter: 10,
+      })
     })
   },
   methods: {
     ...mapActions({
       fetchAllImages: 'fetchAllImages',
     }),
+    fetchImages() {
+      this.fetchAllImages({})
+    },
   },
 }
 </script>

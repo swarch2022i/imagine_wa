@@ -23,55 +23,62 @@ export default {
   data() {
     return {
       images: [
-        {
-          title: 'Titulo 2',
-          url: '/img2.jpg',
-        },
-        {
-          title: 'Titulo 3',
-          url: '/img3.jpg',
-        },
-        {
-          title: 'Titulo 1',
-          url: '/img1.jpg',
-        },
-        {
-          title: 'Titulo 2',
-          url: '/img2.jpg',
-        },
-        {
-          title: 'Titulo 3',
-          url: '/img3.jpg',
-        },
-        {
-          title: 'Titulo 1',
-          url: '/img1.jpg',
-        },
-        {
-          title: 'Titulo 2',
-          url: '/img2.jpg',
-        },
-        {
-          title: 'Titulo 3',
-          url: '/img3.jpg',
-        },
-        {
-          title: 'Titulo 1',
-          url: '/img1.jpg',
-        },
-        {
-          title: 'Titulo 2',
-          url: '/img2.jpg',
-        },
-        {
-          title: 'Titulo 3',
-          url: '/img3.jpg',
-        },
+        // {
+        //   title: 'Titulo 2',
+        //   url: '/img2.jpg',
+        // },
+        // {
+        //   title: 'Titulo 3',
+        //   url: '/img3.jpg',
+        // },
+        // {
+        //   title: 'Titulo 1',
+        //   url: '/img1.jpg',
+        // },
+        // {
+        //   title: 'Titulo 2',
+        //   url: '/img2.jpg',
+        // },
+        // {
+        //   title: 'Titulo 3',
+        //   url: '/img3.jpg',
+        // },
+        // {
+        //   title: 'Titulo 1',
+        //   url: '/img1.jpg',
+        // },
+        // {
+        //   title: 'Titulo 2',
+        //   url: '/img2.jpg',
+        // },
+        // {
+        //   title: 'Titulo 3',
+        //   url: '/img3.jpg',
+        // },
+        // {
+        //   title: 'Titulo 1',
+        //   url: '/img1.jpg',
+        // },
+        // {
+        //   title: 'Titulo 2',
+        //   url: '/img2.jpg',
+        // },
+        // {
+        //   title: 'Titulo 3',
+        //   url: '/img3.jpg',
+        // },
       ],
     }
   },
+  computed: {
+    ...mapState({
+      user: (state) => state.user,
+      loggedIn: (state) => state.loggedIn,
+      allImages: (state) => state.allImages,
+    }),
+  },
   mounted() {
-    this.fetchAllImages({}).then(() => {
+    this.fetchImages().then(() => {
       var elem = document.querySelector('.image-grid')
       var msnry = new Masonry(elem, {
         // options
@@ -85,8 +92,12 @@ export default {
     ...mapActions({
       fetchAllImages: 'fetchAllImages',
     }),
-    fetchImages() {
-      this.fetchAllImages({})
+    async fetchImages() {
+      await this.fetchAllImages({})
+      this.allImages.forEach((image) => {
+        console.log(image)
+        this.images.push({ title: `${image.name}`, url: `${image.url}` })
+      })
     },
   },
 }

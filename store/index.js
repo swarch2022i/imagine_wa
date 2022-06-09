@@ -4,7 +4,7 @@ export const state = () => ({
   perfilInfo: {},
   loginInfo: {},
   loggedIn: true,
-
+  allImages: []
 })
 
 export const mutations = {
@@ -26,6 +26,10 @@ export const mutations = {
 
   ['setLoggedIn'](state, { loggedIn }) {
     state.loggedIn = loggedIn
+  },
+
+  ['setAllImages'](state, { images }) {
+    state.allImages = images
   }
 }
 
@@ -139,29 +143,23 @@ export const actions = {
   async fetchAllImages({ commit }) {
 
     // this.$storageApi.get(`/`).then(response => {
-    //     console.log(response.data)
-    //   })
-    // this.$axios.get(`api/images`).then(response => {
-    //   console.log(response.data)
+    //   // console.log(response.data)
+    //   this.commit('setAllImages', { images: response.data })
     // })
 
-    // this.$axios.post(`${this.$config.API_GATEWAY_URL}/graphql`, {
-    //   query: `{
-    //       allImages {
-    //         url
-    //       }
-    //     }`
-    // }).then(response => {
-    //   console.log(response.data)
-    // })
-
-    // this.$axios.post(`${this.$config.API_GATEWAY}/graphql`, {
-    //   query: `{
-    //       allImages {
-    //         url
-    //       }
-    //     }`
-    // })
+    this.$axios.post(`/graphql`, {
+      query: `{
+          allImages {
+            id
+            name
+            description
+            url
+          }
+        }`
+    }).then((response) => {
+      console.log(response.data.data.allImages)
+      this.commit('setAllImages', { images: response.data.data.allImages })
+    })
 
     // console.log('')
   }

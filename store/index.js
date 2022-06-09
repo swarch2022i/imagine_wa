@@ -3,7 +3,8 @@ export const state = () => ({
   perfil: {},
   perfilInfo: {},
   loginInfo: {},
-  loggedIn: true
+  loggedIn: true,
+
 })
 
 export const mutations = {
@@ -31,8 +32,12 @@ export const mutations = {
 export const actions = {
 
   async fetchLogin({ commit }, { username, password }) {
+    //alert(`${this.$config.STORAGE_MS}/api/storage/upload`)
+    //'http://35.232.133.8:5000/graphql' así funciona, cambiar todas las ips :v
     try {
-      var response = await this.$axios.post(`${process.env.API_GATEWAY_URL}/graphql`, {
+
+      var response = await this.$axios.post(`${this.$config.API_GATEWAY}/graphql`, {
+
         query: `
               mutation
               {
@@ -41,10 +46,10 @@ export const actions = {
       })
       commit('setLoginInfo', { loginInfo: response.data.data.login })
       commit('setUser', { user: JSON.parse(atob(response.data.data.login.token.split('.')[1])) })
-
-
+      commit('setLoggedIn', { loggedIn: true })
+      return response
     } catch (error) {
-      alert('Datos incorrectos')
+      alert('Wrong data')
       console.error(error)
     }
   },
@@ -52,14 +57,27 @@ export const actions = {
   fetchLogOff({ commit }) {
     commit('setLoginInfo', { loginInfo: new Object() })
     commit('setUser', { user: new Object() })
+    commit('setLoggedIn', { loggedIn: false })
   },
 
 
+  async fetchUploadImage({ commit }, { formData }) {
+    try {
+      var response = await this.$axios.post(
+        `${this.$config.STORAGE_MS}/api/storage/upload`,
+        formData
+      )
+      return response
 
-
+    } catch (error) {
+      alert('Couldnt upload it')
+      console.log(error)
+    }
+  },
   async fetchRegister({ commit }, { username, password, password_conf }) {
     try {
-      var response = await this.$axios.post('http://localhost:5000/graphql', {
+      var response = await this.$axios.post(`${this.$config.API_GATEWAY}/graphql`, {
+
         query: `
               mutation
               {
@@ -78,7 +96,9 @@ export const actions = {
   },
   async fetchCreatePerfil({ commit }, { idUsuario, nombre }) {
     try {
-      var response = await this.$axios.post('http://localhost:5000/graphql', {
+
+      var response = await this.$axios.post(`${this.$config.API_GATEWAY}/graphql`, {
+
         query: `
           mutation
           {
@@ -100,7 +120,7 @@ export const actions = {
   },
   async fetchLoadPerfil({ commit }, { idUsuario }) {
     try {
-      var response = await this.$axios.post('http://localhost:5000/graphql', {
+      var response = await this.$axios.post(`${this.$config.API_GATEWAY}/graphql`, {
         query: `{
           getPerfilByIdUsuario(idUsuario:"${idUsuario}"){
               nombre
@@ -121,17 +141,28 @@ export const actions = {
     // this.$storageApi.get(`/`).then(response => {
     //     console.log(response.data)
     //   })
-    this.$axios.get(`api/images`).then(response => {
-        console.log(response.data)
-      })
-      // this.$axios.post(`${this.$config.API_GATEWAY_URL}/graphql`, {
-      //   query: `{
-      //       allImages {
-      //         url
-      //       }
-      //     }`
-      // }).then(response => {
-      //   console.log(response.data)
-      // })
+    // this.$axios.get(`api/images`).then(response => {
+    //   console.log(response.data)
+    // })
+
+    // this.$axios.post(`${this.$config.API_GATEWAY_URL}/graphql`, {
+    //   query: `{
+    //       allImages {
+    //         url
+    //       }
+    //     }`
+    // }).then(response => {
+    //   console.log(response.data)
+    // })
+
+    // this.$axios.post(`${this.$config.API_GATEWAY}/graphql`, {
+    //   query: `{
+    //       allImages {
+    //         url
+    //       }
+    //     }`
+    // })
+
+    // console.log('')
   }
 }

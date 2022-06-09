@@ -88,6 +88,7 @@ export default {
       menuItemsLogged: [
         { title: 'Home', path: '/', icon: 'mdi-home' },
         { title: 'Log out', path: '/login', icon: 'mdi-account' },
+        { title: 'Upload', path: '/uploadImage', icon: 'mdi-image' },
       ],
       searchText: null,
     }
@@ -98,16 +99,17 @@ export default {
     }),
   },
   methods: {
+    ...mapActions({
+      fetchLogOff: 'fetchLogOff',
+    }),
     fetchSearch() {
       this.$router.push(`/search/${encodeURIComponent(this.searchText)}`)
     },
     changeMenu(item) {
       console.log(item)
       if (this.loggedIn && item.title === 'Log out') {
-        // funcion de logout
+        this.fetchLogOff()
         console.log('deslogueado')
-        // this.loggedIn = false
-        this.$store.commit('setLoggedIn', { loggedIn: false })
       }
       this.$router.push(item.path)
     },

@@ -73,31 +73,23 @@ export default {
     ...mapState({
       loginInfo: (state) => state.loginInfo,
       user: (state) => state.user,
+      loggedIn: (state) => state.loggedIn,
     }),
   },
   methods: {
     ...mapActions({
       fetchLogin: 'fetchLogin',
-      fetchLogOff: 'fetchLogOff',
     }),
+
     async login() {
-      console.log("inicia")
-      await this.fetchLogin({
+      var response = await this.fetchLogin({
         username: this.username,
-          password: this.password,
-        })
-        console.log("termina el fetch")
-        console.log("si funciona el boton?")
-        if (Object.keys(this.loginInfo).length === 0) {
-          //Si no fue extioso, lo manda a login
-          console.log("erorrrr")
-        } else {
-          //Si fue exitoso lo manda al home
-          this.$router.push('/')
-        }
-    },
-    logOff() {
-      this.fetchLogOff()
+        password: this.password,
+      })
+
+      if (this.loggedIn) {
+        this.$router.push('/')
+      }
     },
   },
   mounted() {},

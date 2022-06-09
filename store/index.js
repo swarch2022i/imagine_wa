@@ -40,7 +40,7 @@ export const actions = {
     //'http://35.232.133.8:5000/graphql' así funciona, cambiar todas las ips :v
     try {
 
-      var response = await this.$axios.post(`${this.$config.API_GATEWAY}/graphql`, {
+      var response = await this.$axios.post(`/graphql`, {
 
         query: `
               mutation
@@ -80,7 +80,7 @@ export const actions = {
   },
   async fetchRegister({ commit }, { username, password, password_conf }) {
     try {
-      var response = await this.$axios.post(`${this.$config.API_GATEWAY}/graphql`, {
+      var response = await this.$axios.post(`/graphql`, {
 
         query: `
               mutation
@@ -101,7 +101,7 @@ export const actions = {
   async fetchCreatePerfil({ commit }, { idUsuario, nombre }) {
     try {
 
-      var response = await this.$axios.post(`${this.$config.API_GATEWAY}/graphql`, {
+      var response = await this.$axios.post(`/graphql`, {
 
         query: `
           mutation
@@ -124,7 +124,7 @@ export const actions = {
   },
   async fetchLoadPerfil({ commit }, { idUsuario }) {
     try {
-      var response = await this.$axios.post(`${this.$config.API_GATEWAY}/graphql`, {
+      var response = await this.$axios.post(`/graphql`, {
         query: `{
           getPerfilByIdUsuario(idUsuario:"${idUsuario}"){
               nombre

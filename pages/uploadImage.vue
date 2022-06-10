@@ -147,9 +147,9 @@
       </v-row>
     </v-container>
   </div>
-  <div v-else>
+<div v-else>
     <h1>Please Log In</h1>
-  </div>
+</div>
 </template> 
 
 <script>
@@ -253,12 +253,12 @@ export default {
         //strinfy todo :V excepto imagen <3
 
         this.tags.forEach((tag) => {
-          formData.append('tags[]', JSON.stringify(tag))
+           formData.append('tags[]', JSON.stringify(tag));
         })
 
         try {
           var response = await this.$axios.post(
-            `${this.$config.STORAGE_MS}/api/storage/upload`,
+            'https://34.134.27.239:1234/api/storage/upload',
             formData
           )
           console.log(response.data)

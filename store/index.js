@@ -40,7 +40,7 @@ export const actions = {
     //'http://35.232.133.8:5000/graphql' así funciona, cambiar todas las ips :v
     try {
 
-      var response = await this.$axios.post(`/graphql`, {
+      var response = await this.$axios.post('https://graph-imagine.duckdns.org/graphql', {
 
         query: `
               mutation
@@ -68,7 +68,7 @@ export const actions = {
   async fetchUploadImage({ commit }, { formData }) {
     try {
       var response = await this.$axios.post(
-        `${this.$config.STORAGE_MS}/api/storage/upload`,
+        'https://34.134.27.239:1234/api/storage/upload',
         formData
       )
       return response
@@ -80,7 +80,7 @@ export const actions = {
   },
   async fetchRegister({ commit }, { username, password, password_conf }) {
     try {
-      var response = await this.$axios.post(`/graphql`, {
+      var response = await this.$axios.post('https://graph-imagine.duckdns.org/graphql', {
 
         query: `
               mutation
@@ -101,7 +101,7 @@ export const actions = {
   async fetchCreatePerfil({ commit }, { idUsuario, nombre }) {
     try {
 
-      var response = await this.$axios.post(`/graphql`, {
+      var response = await this.$axios.post('https://graph-imagine.duckdns.org/graphql', {
 
         query: `
           mutation
@@ -124,7 +124,7 @@ export const actions = {
   },
   async fetchLoadPerfil({ commit }, { idUsuario }) {
     try {
-      var response = await this.$axios.post(`/graphql`, {
+      var response = await this.$axios.post('https://graph-imagine.duckdns.org/graphql', {
         query: `{
           getPerfilByIdUsuario(idUsuario:"${idUsuario}"){
               nombre
@@ -147,7 +147,7 @@ export const actions = {
     //   this.commit('setAllImages', { images: response.data })
     // })
 
-    this.$axios.post(`/graphql`, {
+    this.$axios.post('https://graph-imagine.duckdns.org/graphql', {
       query: `{
           allImages {
             id
